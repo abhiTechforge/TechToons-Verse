@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TechToons_Verse</title>
+  <title>Tech Forge</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <style>
     * {
@@ -12,22 +12,56 @@
       padding: 0;
       font-family: 'Poppins', sans-serif;
     }
+    :root {
+      --glass: rgba(255, 255, 255, 0.10);
+      --glass-strong: rgba(255, 255, 255, 0.16);
+      --glass-border: rgba(255, 255, 255, 0.28);
+      --text: #f4efff;
+      --text-soft: #d3c8f5;
+      --pink: #ff40bb;
+      --cyan: #28f0ff;
+    }
+    html { background: #120a2b; }
     body {
-      background: linear-gradient(135deg, #d9cffb, #c3b0f8);
-      color: #2e1f4f;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1a0f3d, #2b1066 55%, #12082e);
+      background-attachment: fixed;
+      color: var(--text);
       padding: 20px;
+      position: relative;
+      overflow-x: hidden;
     }
-    a {
-      text-decoration: none;
-      color: inherit;
+    /* glowing orbs behind the glass */
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: -1;
+      pointer-events: none;
     }
+    body::before {
+      width: 420px; height: 420px;
+      top: -80px; left: -100px;
+      background: rgba(255, 64, 187, 0.45);
+    }
+    body::after {
+      width: 480px; height: 480px;
+      bottom: -120px; right: -120px;
+      background: rgba(40, 240, 255, 0.30);
+    }
+    a { text-decoration: none; color: inherit; }
+
     .container {
       max-width: 900px;
       margin: 0 auto 40px auto;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 16px;
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      backdrop-filter: blur(18px) saturate(160%);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
       padding: 40px 30px;
-      box-shadow: 0 10px 30px rgba(108, 90, 255, 0.2);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
     header {
       display: flex;
@@ -40,28 +74,44 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
     }
+    /* animated circular cyberpunk logo */
     .logo {
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      background: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 30px rgba(108, 90, 255, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 0 40px rgba(255, 64, 187, 0.45), 0 0 80px rgba(40, 240, 255, 0.25);
+      animation: pulse 3.5s ease-in-out infinite;
     }
-    .logo img {
-      width: 180px;
-      height: 180px;
-      object-fit: contain;
+    .logo svg { width: 180px; height: 180px; overflow: visible; }
+    .ring-outer { transform-origin: 100px 100px; animation: spin 14s linear infinite; }
+    .ring-inner { transform-origin: 100px 100px; animation: spin 9s linear infinite reverse; }
+    .glitch-a { animation: glitch 3s steps(1) infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(255, 64, 187, 0.45), 0 0 80px rgba(40, 240, 255, 0.25); }
+      50% { box-shadow: 0 0 60px rgba(40, 240, 255, 0.55), 0 0 100px rgba(255, 64, 187, 0.35); }
+    }
+    @keyframes glitch {
+      0%, 92%, 100% { transform: translate(-3px, 2px); }
+      93% { transform: translate(-6px, 3px); }
+      95% { transform: translate(1px, 0); }
+      97% { transform: translate(-4px, 2px); }
     }
     .logo-text {
-      color: #ff40bb;
+      color: var(--pink);
       font-size: 24px;
       font-weight: bold;
-      letter-spacing: 1px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 12px rgba(255, 64, 187, 0.7), 0 0 24px rgba(40, 240, 255, 0.35);
     }
     nav {
       position: absolute;
@@ -70,23 +120,27 @@
     nav a {
       font-size: 18px;
       font-weight: bold;
-      color: #5c47e0;
-      background: #fff;
-      padding: 6px 12px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(92, 71, 224, 0.3);
+      color: var(--text);
+      background: var(--glass-strong);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      padding: 8px 16px;
+      border-radius: 999px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
     }
     h2 {
       text-align: center;
       font-size: 28px;
       margin-bottom: 20px;
-      color: #5c47e0;
+      color: #fff;
+      text-shadow: 0 0 14px rgba(155, 140, 255, 0.6);
     }
     p {
       text-align: center;
       font-size: 16px;
       margin-bottom: 20px;
-      color: #3c2d73;
+      color: var(--text-soft);
     }
     .tech-solutions {
       display: flex;
@@ -95,26 +149,31 @@
       justify-content: center;
     }
     .card {
-      background: #f3efff;
-      border-radius: 16px;
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
       padding: 20px;
       flex: 1 1 250px;
-      box-shadow: 0 8px 20px rgba(108, 90, 255, 0.2);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
       text-align: center;
       transition: 0.3s;
     }
     .card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 12px 30px rgba(108, 90, 255, 0.3);
+      background: var(--glass-strong);
+      box-shadow: 0 14px 34px rgba(40, 240, 255, 0.25);
     }
     .card h3 {
-      color: #4e3dbb;
+      color: #fff;
       margin-bottom: 12px;
     }
     .card ul {
       list-style: none;
       padding-left: 0;
       text-align: left;
+      color: var(--text-soft);
     }
     .card ul li {
       margin-bottom: 10px;
@@ -126,35 +185,42 @@
       gap: 15px;
     }
     .social-btn {
-      background: #5c47e0;
+      background: rgba(155, 140, 255, 0.35);
       color: white;
-      padding: 10px 18px;
-      border-radius: 25px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--glass-border);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
       font-weight: bold;
-      box-shadow: 0 4px 12px rgba(92, 71, 224, 0.4);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
       transition: 0.3s;
       display: inline-block;
       text-align: center;
     }
     .social-btn:hover {
-      background: #3c20cc;
+      transform: translateY(-3px);
+      background: rgba(155, 140, 255, 0.6);
     }
-    .telegram { background: #33aaff; }
-    .instagram { background: #c13584; }
-    .whatsapp { background: #25d366; }
-    .youtube { background: #ff0000; }
+    .telegram { background: rgba(51, 170, 255, 0.40); }
+    .instagram { background: rgba(193, 53, 132, 0.45); }
+    .whatsapp { background: rgba(37, 211, 102, 0.40); }
+    .youtube { background: rgba(255, 0, 0, 0.40); }
     .whatsapp-chat {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #25d366;
+      background: rgba(37, 211, 102, 0.55);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
       width: 55px;
       height: 55px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.5);
       z-index: 999;
     }
     .whatsapp-chat img {
@@ -164,19 +230,25 @@
     button {
       display: block;
       margin: 20px auto;
-      padding: 12px 24px;
-      background: #5c47e0;
+      padding: 12px 26px;
+      background: rgba(155, 140, 255, 0.35);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
       color: white;
-      border: none;
-      border-radius: 25px;
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
       font-weight: bold;
       font-size: 16px;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(92, 71, 224, 0.4);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
       transition: 0.3s;
     }
     button:hover {
-      background: #3c20cc;
+      background: rgba(155, 140, 255, 0.6);
+    }
+    :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) {
+      .logo, .ring-outer, .ring-inner, .glitch-a { animation: none; }
     }
     @media(max-width: 700px) {
       .tech-solutions {
@@ -190,10 +262,12 @@
         width: 150px;
         height: 150px;
       }
-      .logo img {
-        width: 130px;
-        height: 130px;
+      .logo svg {
+        width: 135px;
+        height: 135px;
       }
+      header { flex-direction: column; }
+      nav { position: static; margin-bottom: 20px; }
     }
   </style>
 </head>
@@ -203,14 +277,43 @@
     <nav><a href="#home">🏠 Home</a></nav>
     <div class="logo-container">
       <div class="logo">
-        <img src="https://placehold.co/180x180/ff40bb/ffffff?text=TT" alt="TechToons_Verse Logo" />
+        <!-- Cyberpunk "TF" logo: spinning neon rings + glitch lettering -->
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tech Forge Logo">
+          <defs>
+            <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ff40bb"/>
+              <stop offset="1" stop-color="#28f0ff"/>
+            </linearGradient>
+          </defs>
+          <g class="ring-outer" fill="none" stroke="url(#neon)" stroke-width="3" stroke-linecap="round">
+            <circle cx="100" cy="100" r="92" stroke-dasharray="70 18 20 18"/>
+          </g>
+          <g class="ring-inner" fill="none" stroke="#28f0ff" stroke-width="2" stroke-linecap="round">
+            <circle cx="100" cy="100" r="78" stroke-dasharray="4 10"/>
+          </g>
+          <polygon points="100,38 154,69 154,131 100,162 46,131 46,69" fill="rgba(18,10,43,0.55)" stroke="url(#neon)" stroke-width="3"/>
+          <g class="glitch-a" fill="none" stroke="#28f0ff" stroke-width="9" stroke-linecap="square" opacity="0.8">
+            <path d="M72 76 H128 M100 76 V126"/>
+          </g>
+          <g fill="none" stroke="#ff40bb" stroke-width="9" stroke-linecap="square">
+            <path d="M72 76 H128 M100 76 V126"/>
+          </g>
+          <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="square">
+            <path d="M112 126 V96 H136 M112 111 H131"/>
+          </g>
+          <g fill="#28f0ff">
+            <circle cx="46" cy="100" r="4"/>
+            <circle cx="154" cy="100" r="4"/>
+            <circle cx="100" cy="162" r="4"/>
+          </g>
+        </svg>
       </div>
-      <div class="logo-text">TECHTOONS_VERSE</div>
+      <div class="logo-text">TECH FORGE</div>
     </div>
   </header>
 
   <div class="container" id="home">
-    <h2>👋 Welcome to TechToons_Verse</h2>
+    <h2>👋 Welcome to Tech Forge</h2>
     <p>🚀 Your go-to hub for AI 🤖, Android 📱, and iOS 🍎 tech solutions.</p>
   </div>
 
@@ -294,7 +397,7 @@
   </div>
 
   <div class="container" id="about">
-    <h2>👨‍💻 About TechToons_Verse</h2>
+    <h2>👨‍💻 About Tech Forge</h2>
     <p>
       🙋‍♂️ Name: <strong>Abhishek Sharma</strong> <br>
       📚 Class: 11th <br>
